@@ -3,7 +3,9 @@
 
     .list-group-item {
         cursor: pointer;
-        
+
+        &.active,
+        &:focus,
         &:hover {
             background-color: #444;
         }

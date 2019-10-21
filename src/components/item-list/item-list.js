@@ -24,9 +24,11 @@ export default class ItemList extends Component {
     }
 
     renderList(arr) {
-        return arr.map(({id, name}) => {
+        return arr
+            .slice(0, 5)
+            .map(({id, name}) => {
             return (
-                <li className="list-group-item"
+                <li className={`list-group-item ${this.props.activeId === id ? 'active' : ''}`}
                     key={id}
                     onClick={() => this.props.onItemSelected(id)}
                 >{name}</li>
@@ -38,7 +40,7 @@ export default class ItemList extends Component {
         const { peopleList } = this.state;
 
         if (!peopleList) {
-            return <Spinner/>
+            return <div className="card"><Spinner/></div>
         }
 
         return (

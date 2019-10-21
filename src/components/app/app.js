@@ -4,15 +4,13 @@ import Header from '../header';
 import RandomPlanet from '../random-planet';
 import ErrorIndicator from '../error-indicator';
 import ErrorButton from '../error-button';
-import ItemList from '../item-list';
-import PersonDetails from '../person-details';
-
+import PeoplePage from '../people-page';
 import './app.scss';
 
 export default class App extends Component {
     state = {
         showRandomPlanet: true,
-        selectedPerson: null
+        hasError: false,
     };
 
     toggleRandomPlanet = () => {
@@ -21,12 +19,6 @@ export default class App extends Component {
                 showRandomPlanet: !state.showRandomPlanet
             }
         });
-    };
-
-    onPersonSelected = (id) => {
-        this.setState({
-            selectedPerson: id,
-        })
     };
 
     componentDidCatch() {
@@ -43,27 +35,23 @@ export default class App extends Component {
             null;
 
         return (
-            <div>
+            <div className="container">
                 <Header/>
                 { planet }
 
                 <div className="row mb2 button-row">
-                    <button
-                        className="toggle-planet btn btn-warning btn-lg"
-                        onClick={this.toggleRandomPlanet}>
-                        Toggle Random Planet
-                    </button>
-                    <ErrorButton />
+                    <div className="col-md-12">
+                        <button
+                            className="toggle-planet btn btn-warning btn-lg"
+                            onClick={this.toggleRandomPlanet}>
+                            Toggle Random Planet
+                        </button>
+                        <ErrorButton />
+                    </div>
                 </div>
 
-                <div className="row mb2">
-                    <div className="col-md-6">
-                        <ItemList onItemSelected={this.onPersonSelected}/>
-                    </div>
-                    <div className="col-md-6">
-                        <PersonDetails id={this.state.selectedPerson}/>
-                    </div>
-                </div>
+                <PeoplePage />
+                <PeoplePage />
             </div>
         );
     }
