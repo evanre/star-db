@@ -17,8 +17,14 @@ export default class SwapiService {
         return acc;
     }, {});
 
-    _transformProps(props, obj, id) {
-        return { id: this._getId(id||obj), ...this._pick(props)(obj) }
+    _transformProps(props, obj, _type, _id) {
+        const id = this._getId(_id||obj);
+        const type = _type === 'people' ? 'characters' : _type;
+        return {
+            id,
+            imgUrl: `https://starwars-visualguide.com/assets/img/${type}/${id}.jpg`,
+            ...this._pick(props)(obj),
+        }
     }
 
     async _getResource(url) {
@@ -33,7 +39,7 @@ export default class SwapiService {
 
     _get = type => async (id = false) => {
         const res = await this._getResource(`/${type}/${id || ''}`);
-        const transform = obj => this._transformProps(this[`_${type}Model`], obj, id);
+        const transform = obj => this._transformProps(this[`_${type}Model`], obj, type, id);
         return id ? transform(res) : res.results.map(obj => transform(obj));
     };
 
