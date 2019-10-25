@@ -23,7 +23,7 @@ export default class ItemList extends Component {
                 <li className={`list-group-item ${this.props.activeId === i.id ? 'active' : ''}`}
                     key={i.id}
                     onClick={() => this.props.onItemSelected(i.id)}
-                >{this.props.renderItem(i)}</li>
+                >{this.props.children(i)}</li>
             )
         );
     }

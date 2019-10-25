@@ -2,16 +2,13 @@ import React, { Component } from 'react';
 
 import Spinner from "../spinner";
 
-import './person-details.scss'
-import SwapiService from '../../services/swapi-service';
+import './item-details.scss'
 import ErrorButton from '../error-button';
 
-export default class PersonDetails extends Component {
-
-    swapiService = new SwapiService();
+export default class ItemDetails extends Component {
 
     state = {
-        person: null,
+        item: null,
         loaded: false,
     };
 
@@ -20,36 +17,37 @@ export default class PersonDetails extends Component {
     }
 
     componentDidUpdate(prevProps) {
-        if (this.props.personId !== prevProps.personId) {
+        if (this.props.itemId !== prevProps.itemId) {
             this.updatePerson();
         }
     }
 
     updatePerson() {
-        const { personId } = this.props;
-        if(!personId) {
+        const { itemId, getData } = this.props;
+        if(!itemId) {
             return;
         }
 
         this.setState({ loaded: false });
 
-        this.swapiService
-            .getPerson(personId)
-            .then((person) => {
-                this.setState({ person, loaded: true });
+        getData(itemId)
+            .then((item) => {
+                this.setState({ item, loaded: true });
             })
     }
 
     render() {
-        const p = this.state.person;
+        const p = this.state.item;
 
         if (!this.state.loaded) {
-            return <div className="person-details card"><Spinner/></div>
+            return <div className="item-details card"><Spinner/></div>
         }
+        
+        console.log( p );
 
         return(
-            <div className="person-details card">
-                <img className="person-image" src={`https://starwars-visualguide.com/assets/img/characters/${p.id}.jpg`} alt={p.name}/>
+            <div className="item-details card">
+                <img className="item-image" src={p.imgUrl} alt={p.name}/>
 
                 <div className="card-body">
                     <h4>{p.name}</h4>
