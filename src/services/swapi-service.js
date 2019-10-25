@@ -1,7 +1,7 @@
 export default class SwapiService {
     _apiBase = 'https://swapi.co/api';
     _planetsModel = ['name', 'population', 'rotation_period:rotationPeriod', 'diameter'];
-    _peopleModel = ['name', 'gender', 'birthYear', 'eyeColor'];
+    _peopleModel = ['name', 'gender', 'birth_year:birthYear', 'eye_color:eyeColor'];
     _starshipsModel = ['name', 'model', 'manufacturer', 'costInCredits', 'length', 'crew', 'passengers', 'cargoCapacity'];
 
     _getId(item) {
@@ -37,11 +37,11 @@ export default class SwapiService {
         return id ? transform(res) : res.results.map(obj => transform(obj));
     };
 
-    getAllPeople = this._get('people');
+    getAllPeople = () => this._get('people')();
 
-    getAllStarships = this._get('starships');
+    getAllStarships = () => this._get('starships')();
 
-    getAllPlanets = () => this._get('planets');
+    getAllPlanets = () => this._get('planets')();
 
     getPerson = id => this._get('people')(id);
 
