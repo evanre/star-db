@@ -3,21 +3,21 @@ import React, {Component} from 'react';
 import Header from '../header';
 import RandomPlanet from '../random-planet';
 import ErrorIndicator from '../error-indicator';
-import ErrorButton from '../error-button';
-import PeoplePage from '../people-page';
-import './app.scss';
 import ItemList from '../item-list';
-import ItemDetails from '../item-details';
+import ItemDetails, { Record } from '../item-details/item-details';
 import Row from '../row';
 import SwapiService from '../../services/swapi-service';
+
+import './app.scss';
 
 export default class App extends Component {
 
     swapiService = new SwapiService();
 
     state = {
-        showRandomPlanet: true,
+        showRandomPlanet: false,
         hasError: false,
+        selectedItem: Math.floor(Math.random()*5 + 1).toString(),
     };
 
     toggleRandomPlanet = () => {
@@ -32,6 +32,12 @@ export default class App extends Component {
         this.setState({ hasError: true });
     }
 
+    onItemSelected = (id) => {
+        this.setState({
+            selectedItem: id,
+        })
+    };
+
     render() {
         if (this.state.hasError) {
             return <ErrorIndicator />
@@ -41,14 +47,27 @@ export default class App extends Component {
             <RandomPlanet/> :
             null;
 
-        const personDetails = <ItemDetails getData={this.swapiService.getPerson} itemId={11}/>
-        const planetDetails = <ItemDetails getData={this.swapiService.getPlanet} itemId={3}/>
+        const personDetails = (
+            <ItemDetails getData={this.swapiService.getItem} itemId={11}>
+                <Record field="gender" label="Gender"/>
+                <Record field="eyeColor" label="Eye Color"/>
+                <Record field="birthYear" label="Birth Year"/>
+            </ItemDetails>
+        );
+
+        const planetDetails = (
+            <ItemDetails getData={this.swapiService.getPlanet} itemId={3}>
+                <Record field="diameter" label="Diameter"/>
+                <Record field="population" label="Population"/>
+                <Record field="rotationPeriod" label="Rotation Period"/>
+            </ItemDetails>
+        );
 
         return (
             <div className="container">
                 <Header/>
-                {/*
                 { planet }
+                {/*
                 <div className="row mb2 button-row">
                     <div className="col-md-12">
                         <button
@@ -61,24 +80,31 @@ export default class App extends Component {
                 </div>
                 */}
 
-                <Row left={personDetails} right={planetDetails}/>
+                {/*<Row left={personDetails} right={planetDetails}/>*/}
 
                 {/*
+                */}
                 <div className="row mb2">
                     <div className="col-md-6">
                         <ItemList
-                            activeId={this.state.selectedPerson}
-                            onItemSelected={this.onPersonSelected}
+                            activeId={this.state.selectedItem}
+                            onItemSelected={this.onItemSelected}
                             getData={this.swapiService.getAllPlanets}
                         >
                             {item => item.name}
                         </ItemList>
                     </div>
                     <div className="col-md-6">
-                        <ItemDetails personId={this.state.selectedPerson}/>
+                        <ItemDetails
+                            itemId={this.state.selectedItem}
+                            getData={this.swapiService.getPlanet}
+                        >
+                            <Record field="diameter" label="Diameter"/>
+                            <Record field="population" label="Population"/>
+                            <Record field="rotationPeriod" label="Rotation Period"/>
+                        </ItemDetails>
                     </div>
                 </div>
-                */}
             </div>
         );
     }

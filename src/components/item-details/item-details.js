@@ -5,6 +5,15 @@ import Spinner from "../spinner";
 import './item-details.scss'
 import ErrorButton from '../error-button';
 
+export const Record = ({ item, field, label }) => {
+    return (
+        <li className="list-group-item">
+            <span className="term">{label}</span>
+            <span>{item[field]}</span>
+        </li>
+    )
+};
+
 export default class ItemDetails extends Component {
 
     state = {
@@ -37,33 +46,20 @@ export default class ItemDetails extends Component {
     }
 
     render() {
-        const p = this.state.item;
+        const { item } = this.state;
 
         if (!this.state.loaded) {
             return <div className="item-details card"><Spinner/></div>
         }
-        
-        console.log( p );
 
         return(
             <div className="item-details card">
-                <img className="item-image" src={p.imgUrl} alt={p.name}/>
+                <img className="item-image" src={item.imgUrl} alt={item.name}/>
 
                 <div className="card-body">
-                    <h4>{p.name}</h4>
-                    <ul className="list-group list-group-flaush">
-                        <li className="list-group-item">
-                            <span className="term">Gender</span>
-                            <span>{p.gender}</span>
-                        </li>
-                        <li className="list-group-item">
-                            <span className="term">Birth year</span>
-                            <span>{p.BirthYear}</span>
-                        </li>
-                        <li className="list-group-item">
-                            <span className="term">Eye Color</span>
-                            <span>{p.eyeColor}</span>
-                        </li>
+                    <h4>{item.name}</h4>
+                    <ul className="list-group list-group-flush">
+                        { React.Children.map(this.props.children, child => React.cloneElement(child, { item })) }
                     </ul>
                     <ErrorButton />
                 </div>

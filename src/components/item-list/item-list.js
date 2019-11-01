@@ -1,44 +1,28 @@
-import React, { Component } from 'react';
-
-import Spinner from '../spinner';
+import React from 'react';
+import { withData } from '../hoc-helpers';
 
 import './item-list.scss';
 
-export default class ItemList extends Component {
+const ItemList = (props) => {
+    const { data, onItemSelected, activeId, children: renderLabel } = props;
 
-    state = {
-        itemList: null,
-    };
-
-    componentDidMount() {
-        this.props.getData().then((itemList) => {
-            this.setState({ itemList })
-        })
-    }
-
-    renderList(arr) {
+    const renderList = (arr) => {
         return arr
             .slice(0, 5)
             .map((i) => (
-                <li className={`list-group-item ${this.props.activeId === i.id ? 'active' : ''}`}
+                <li className={`list-group-item ${activeId === i.id ? 'active' : ''}`}
                     key={i.id}
-                    onClick={() => this.props.onItemSelected(i.id)}
-                >{this.props.children(i)}</li>
+                    onClick={() => onItemSelected(i.id)}
+                >{renderLabel(i)}</li>
             )
         );
-    }
+    };
 
-    render() {
-        const { itemList } = this.state;
-
-        if (!itemList) {
-            return <div className="card"><Spinner/></div>
-        }
-
-        return (
-            <ul className="item-list list-group">
-                {this.renderList(itemList)}
-            </ul>
-        );
-    }
+    return (
+        <ul className="item-list list-group">
+            {renderList(data)}
+        </ul>
+    );
 };
+
+export default withData(ItemList);
