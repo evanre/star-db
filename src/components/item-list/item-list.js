@@ -1,28 +1,28 @@
 import React from 'react';
-import { withData } from '../hoc-helpers';
 
 import './item-list.scss';
 
-const ItemList = (props) => {
-    const { data, onItemSelected, activeId, children: renderLabel } = props;
+const ItemList = ({ data, onItemSelected, activeId, children: renderLabel, type }) => {
+    const arr = data.slice(0, 5);
 
-    const renderList = (arr) => {
-        return arr
-            .slice(0, 5)
-            .map((i) => (
-                <li className={`list-group-item ${activeId === i.id ? 'active' : ''}`}
-                    key={i.id}
-                    onClick={() => onItemSelected(i.id)}
-                >{renderLabel(i)}</li>
-            )
-        );
+    const randomId = () => {
+        const id = arr[Math.floor(Math.random() * arr.length)].id;
+        onItemSelected(id, type);
+        return id;
     };
+
+    const id = activeId || randomId();
 
     return (
         <ul className="item-list list-group">
-            {renderList(data)}
+            {arr.map((i) => (
+                <li className={`list-group-item ${id === i.id ? 'active' : ''}`}
+                    key={i.id}
+                    onClick={() => onItemSelected(i.id, type)}
+                >{renderLabel(i)}</li>
+            ))}
         </ul>
     );
 };
 
-export default withData(ItemList);
+export default ItemList;

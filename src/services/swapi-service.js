@@ -49,7 +49,7 @@ export default class SwapiService {
 
     getAllPlanets = () => this._get('planets')();
 
-    getPerson = id => this._get('people')(id);
+    getPeople = id => this._get('people')(id);
 
     getStarship = id => this._get('starships')(id);
 

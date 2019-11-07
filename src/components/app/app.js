@@ -1,23 +1,22 @@
 import React, {Component} from 'react';
 
-import Header from '../header';
-import RandomPlanet from '../random-planet';
+// import Header from '../header';
+// import RandomPlanet from '../random-planet';
 import ErrorIndicator from '../error-indicator';
-import ItemList from '../item-list';
-import ItemDetails, { Record } from '../item-details/item-details';
-import Row from '../row';
-import SwapiService from '../../services/swapi-service';
+import { PeopleList/*, StarshipList, PlanetList*/ } from '../sw-components/lists'
+import { PeopleDetails/*, StarshipDetails, PlanetDetails*/ } from '../sw-components/details'
+// import Row from '../row';
 
 import './app.scss';
+import { Record } from '../item-details/item-details';
 
 export default class App extends Component {
-
-    swapiService = new SwapiService();
-
     state = {
         showRandomPlanet: false,
         hasError: false,
-        selectedItem: Math.floor(Math.random()*5 + 1).toString(),
+        selectedPeople: false,
+        selectedStarship: false,
+        selectedPlanet: false,
     };
 
     toggleRandomPlanet = () => {
@@ -32,10 +31,10 @@ export default class App extends Component {
         this.setState({ hasError: true });
     }
 
-    onItemSelected = (id) => {
+    onItemSelected = (id, type) => {
         this.setState({
-            selectedItem: id,
-        })
+            [`selected${type || 'Item'}`]: id,
+        });
     };
 
     render() {
@@ -43,68 +42,69 @@ export default class App extends Component {
             return <ErrorIndicator />
         }
 
-        const planet = this.state.showRandomPlanet ?
-            <RandomPlanet/> :
-            null;
-
-        const personDetails = (
-            <ItemDetails getData={this.swapiService.getItem} itemId={11}>
-                <Record field="gender" label="Gender"/>
-                <Record field="eyeColor" label="Eye Color"/>
-                <Record field="birthYear" label="Birth Year"/>
-            </ItemDetails>
-        );
-
-        const planetDetails = (
-            <ItemDetails getData={this.swapiService.getPlanet} itemId={3}>
-                <Record field="diameter" label="Diameter"/>
-                <Record field="population" label="Population"/>
-                <Record field="rotationPeriod" label="Rotation Period"/>
-            </ItemDetails>
-        );
-
         return (
             <div className="container">
-                <Header/>
-                { planet }
-                {/*
-                <div className="row mb2 button-row">
-                    <div className="col-md-12">
-                        <button
-                            className="toggle-planet btn btn-warning btn-lg"
-                            onClick={this.toggleRandomPlanet}>
-                            Toggle Random Planet
-                        </button>
-                        <ErrorButton />
-                    </div>
-                </div>
-                */}
+                {/*<Header/>*/}
+                {/*{ this.state.showRandomPlanet ? <RandomPlanet/> : null }*/}
 
-                {/*<Row left={personDetails} right={planetDetails}/>*/}
-
-                {/*
-                */}
                 <div className="row mb2">
                     <div className="col-md-6">
-                        <ItemList
-                            activeId={this.state.selectedItem}
+                        <PeopleList
+                            activeId={this.state.selectedPeople}
                             onItemSelected={this.onItemSelected}
-                            getData={this.swapiService.getAllPlanets}
                         >
-                            {item => item.name}
-                        </ItemList>
+                            {item => `${item.name}, ${item.id}`}
+                        </PeopleList>
                     </div>
                     <div className="col-md-6">
-                        <ItemDetails
-                            itemId={this.state.selectedItem}
-                            getData={this.swapiService.getPlanet}
+                        <PeopleDetails itemId={this.state.selectedPeople}>
+                            <Record field="id" label="ID"/>
+                            <Record field="gender" label="Gender"/>
+                            <Record field="eyeColor" label="Eye Color"/>
+                            <Record field="birthYear" label="Birth Year"/>
+                        </PeopleDetails>
+                    </div>
+                </div>
+                {/*<div className="row mb2">
+                    <div className="col-md-6">
+                        <StarshipList
+                            activeId={this.state.selectedStarship}
+                            onItemSelected={this.onItemSelected}
                         >
+                            {item => `${item.name}, ${item.id}`}
+                        </StarshipList>
+                    </div>
+                    <div className="col-md-6">
+                        <StarshipDetails itemId={this.state.selectedStarship}>
+                            <Record field="id" label="ID"/>
+                            <Record field="model" label="Model"/>
+                            <Record field="manufacturer" label="Manufacturer"/>
+                            <Record field="costInCredits" label="Cost"/>
+                            <Record field="length" label="Length"/>
+                            <Record field="crew" label="Crew"/>
+                            <Record field="passengers" label="Passengers"/>
+                            <Record field="cargoCapacity" label="Capacity"/>
+                        </StarshipDetails>
+                    </div>
+                </div>
+                <div className="row mb2">
+                    <div className="col-md-6">
+                        <PlanetList
+                            activeId={this.state.selectedPlanet}
+                            onItemSelected={this.onItemSelected}
+                        >
+                            {item => `${item.name}, ${item.id}`}
+                        </PlanetList>
+                    </div>
+                    <div className="col-md-6">
+                        <PlanetDetails itemId={this.state.selectedPlanet}>
+                            <Record field="id" label="ID"/>
                             <Record field="diameter" label="Diameter"/>
                             <Record field="population" label="Population"/>
                             <Record field="rotationPeriod" label="Rotation Period"/>
-                        </ItemDetails>
+                        </PlanetDetails>
                     </div>
-                </div>
+                </div>*/}
             </div>
         );
     }

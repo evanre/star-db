@@ -1,9 +1,6 @@
-import React, { Component } from 'react';
-
-import Spinner from "../spinner";
+import React from 'react';
 
 import './item-details.scss'
-import ErrorButton from '../error-button';
 
 export const Record = ({ item, field, label }) => {
     return (
@@ -14,56 +11,20 @@ export const Record = ({ item, field, label }) => {
     )
 };
 
-export default class ItemDetails extends Component {
+const ItemDetails = ({ data: item, children }) => {
+    console.log( item );
+    return (
+        <div className="item-details card">
+            <img className="item-image" src={item.imgUrl} alt={item.name}/>
 
-    state = {
-        item: null,
-        loaded: false,
-    };
-
-    componentDidMount() {
-        this.updatePerson();
-    }
-
-    componentDidUpdate(prevProps) {
-        if (this.props.itemId !== prevProps.itemId) {
-            this.updatePerson();
-        }
-    }
-
-    updatePerson() {
-        const { itemId, getData } = this.props;
-        if(!itemId) {
-            return;
-        }
-
-        this.setState({ loaded: false });
-
-        getData(itemId)
-            .then((item) => {
-                this.setState({ item, loaded: true });
-            })
-    }
-
-    render() {
-        const { item } = this.state;
-
-        if (!this.state.loaded) {
-            return <div className="item-details card"><Spinner/></div>
-        }
-
-        return(
-            <div className="item-details card">
-                <img className="item-image" src={item.imgUrl} alt={item.name}/>
-
-                <div className="card-body">
-                    <h4>{item.name}</h4>
-                    <ul className="list-group list-group-flush">
-                        { React.Children.map(this.props.children, child => React.cloneElement(child, { item })) }
-                    </ul>
-                    <ErrorButton />
-                </div>
+            <div className="card-body">
+                <h4>{item.name}</h4>
+                <ul className="list-group list-group-flush">
+                    { React.Children.map(children, child => React.cloneElement(child, { item })) }
+                </ul>
             </div>
-        )
-    }
-}
+        </div>
+    );
+};
+
+export default ItemDetails;
