@@ -12,7 +12,6 @@ export const Record = ({ item, field, label }) => {
 };
 
 const ItemDetails = ({ data: item, children }) => {
-    console.log( item );
     return (
         <div className="item-details card">
             <img className="item-image" src={item.imgUrl} alt={item.name}/>

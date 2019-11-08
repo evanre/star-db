@@ -6,6 +6,6 @@ const swapi = new SwapiService();
 
 export const PeopleList = withData(ItemList, swapi.getAllPeople, 'People');
 
-// export const PlanetList = withData(ItemList, swapi.getAllPlanets, 'Planet');
+export const PlanetList = withData(ItemList, swapi.getAllPlanets, 'Planet');
 
-// export const StarshipList = withData(ItemList, swapi.getAllStarships, 'Starship');
+export const StarshipList = withData(ItemList, swapi.getAllStarships, 'Starship');

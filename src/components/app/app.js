@@ -1,10 +1,10 @@
 import React, {Component} from 'react';
 
-// import Header from '../header';
-// import RandomPlanet from '../random-planet';
+import Header from '../header';
+import RandomPlanet from '../random-planet';
 import ErrorIndicator from '../error-indicator';
-import { PeopleList/*, StarshipList, PlanetList*/ } from '../sw-components/lists'
-import { PeopleDetails/*, StarshipDetails, PlanetDetails*/ } from '../sw-components/details'
+import { PeopleList, StarshipList, PlanetList } from '../sw-components/lists'
+import { PeopleDetails, StarshipDetails, PlanetDetails } from '../sw-components/details'
 // import Row from '../row';
 
 import './app.scss';
@@ -44,8 +44,8 @@ export default class App extends Component {
 
         return (
             <div className="container">
-                {/*<Header/>*/}
-                {/*{ this.state.showRandomPlanet ? <RandomPlanet/> : null }*/}
+                <Header/>
+                { this.state.showRandomPlanet ? <RandomPlanet/> : null }
 
                 <div className="row mb2">
                     <div className="col-md-6">
@@ -65,7 +65,7 @@ export default class App extends Component {
                         </PeopleDetails>
                     </div>
                 </div>
-                {/*<div className="row mb2">
+                <div className="row mb2">
                     <div className="col-md-6">
                         <StarshipList
                             activeId={this.state.selectedStarship}
@@ -104,7 +104,7 @@ export default class App extends Component {
                             <Record field="rotationPeriod" label="Rotation Period"/>
                         </PlanetDetails>
                     </div>
-                </div>*/}
+                </div>
             </div>
         );
     }

@@ -7,7 +7,6 @@ const withData = (View, getData, type = false) => {
         state = {
             data: null,
             hasError: false,
-            initialized: false
         };
 
         updateData(id) {
@@ -21,24 +20,21 @@ const withData = (View, getData, type = false) => {
                 });
         }
 
-        // componentDidUpdate(prevProps) {
-        //     console.log( 'componentDidUpdate' );
-        //
-        //     const { itemId } = this.props;
-        //     if(itemId !== prevProps.itemId) {
-        //         this.updateData(itemId);
-        //     }
-        // }
-
-        componentDidMount() {
-            console.log( 'componentDidMount' );
+        componentDidUpdate(prevProps) {
             const { itemId } = this.props;
 
-            if(itemId === false) {
-                return;
+            if(itemId !== prevProps.itemId) {
+                this.setState({ data: false });
+                this.updateData(itemId);
             }
+        }
 
-            this.updateData(itemId);
+        componentDidMount() {
+            const { itemId } = this.props;
+
+            if (itemId !== false) {
+                this.updateData(itemId);
+            }
         }
 
         render() {
