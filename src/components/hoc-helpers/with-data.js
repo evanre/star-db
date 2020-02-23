@@ -1,11 +1,14 @@
 import React, { Component } from "react";
 import Spinner from "../spinner";
 import ErrorIndicator from "../error-indicator";
+import SwapiService from "../../services/swapi-service";
 
-const withData = (View, getData, type = false) => {
+const swapi = new SwapiService();
+
+const withData = (View, type) => {
   return class extends Component {
     state = {
-      data: null,
+      data: false,
       hasError: false
     };
 
@@ -13,7 +16,7 @@ const withData = (View, getData, type = false) => {
       const { itemId } = this.props;
 
       if (itemId !== false) {
-        this.updateData(itemId);
+        this.requestData(itemId);
       }
     }
 
@@ -22,12 +25,12 @@ const withData = (View, getData, type = false) => {
 
       if (itemId !== prevProps.itemId) {
         this.setState({ data: false });
-        this.updateData(itemId);
+        this.requestData(itemId);
       }
     }
 
-    updateData(id) {
-      getData(id)
+    requestData(id) {
+      swapi.request(type)(id)
         .then(data => {
           this.setState({ data });
         })

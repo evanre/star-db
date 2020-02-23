@@ -1,9 +1,6 @@
 import React from "react";
 import ItemDetails, { Record } from "../item-details/item-details";
 import { withData } from "../hoc-helpers";
-import SwapiService from "../../services/swapi-service";
-
-const swapi = new SwapiService();
 
 export const PeopleDetails = withData(props => {
   return (
@@ -14,9 +11,9 @@ export const PeopleDetails = withData(props => {
       <Record field="birthYear" label="Birth Year" />
     </ItemDetails>
   );
-}, swapi.getPeople);
+}, 'people');
 
-export const PlanetDetails = withData(props => {
+export const PlanetsDetails = withData(props => {
   return (
     <ItemDetails {...props}>
       <Record field="id" label="ID" />
@@ -25,9 +22,9 @@ export const PlanetDetails = withData(props => {
       <Record field="rotationPeriod" label="Rotation Period" />
     </ItemDetails>
   );
-}, swapi.getPlanet);
+}, 'planets');
 
-export const StarshipDetails = withData(props => {
+export const StarshipsDetails = withData(props => {
   return (
     <ItemDetails {...props}>
       <Record field="id" label="ID" />
@@ -40,4 +37,4 @@ export const StarshipDetails = withData(props => {
       <Record field="cargoCapacity" label="Capacity" />
     </ItemDetails>
   );
-}, swapi.getStarship);
+}, 'starships');

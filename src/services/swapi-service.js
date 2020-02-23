@@ -51,16 +51,4 @@ export default class SwapiService {
     const transform = obj => this.transformProps(this[`${type}Model`], obj, type, id);
     return id ? transform(res) : res.results.map(obj => transform(obj));
   };
-
-  getAllPeople = () => this.request("people")();
-
-  getAllStarships = () => this.request("starships")();
-
-  getAllPlanets = () => this.request("planets")();
-
-  getPeople = id => this.request("people")(id);
-
-  getStarship = id => this.request("starships")(id);
-
-  getPlanet = id => this.request("planets")(id);
 }

@@ -3,8 +3,8 @@ import React, { Component } from "react";
 import Header from "../header";
 import RandomPlanet from "../random-planet";
 import ErrorIndicator from "../error-indicator";
-import { PeopleList, PlanetList, StarshipList } from "../sw-components/lists";
-import { PeopleDetails, PlanetDetails, StarshipDetails } from "../sw-components/details";
+import { PeopleList, PlanetsList, StarshipsList } from "../sw-components/lists";
+import { PeopleDetails, PlanetsDetails, StarshipsDetails } from "../sw-components/details";
 import Row from "../row";
 
 import "./app.scss";
@@ -13,9 +13,9 @@ export default class App extends Component {
   state = {
     showRandomPlanet: true,
     hasError: false,
-    selectedPeople: false,
-    selectedStarship: false,
-    selectedPlanet: false
+    peopleSelected: false,
+    starshipsSelected: false,
+    planetsSelected: false
   };
 
   componentDidCatch() {
@@ -32,12 +32,12 @@ export default class App extends Component {
 
   onSelected = (id, type) => {
     this.setState({
-      [`selected${type || "Item"}`]: id
+      [`${type}Selected`]: id
     });
   };
 
   render() {
-    const { hasError, selectedPeople, selectedStarship, selectedPlanet, showRandomPlanet } = this.state;
+    const { hasError, peopleSelected, starshipsSelected, planetsSelected, showRandomPlanet } = this.state;
 
     if (hasError) {
       return <ErrorIndicator />;
@@ -49,18 +49,18 @@ export default class App extends Component {
         {showRandomPlanet ? <RandomPlanet /> : null}
 
         <Row
-          left={<PeopleList activeId={selectedPeople} onSelected={this.onSelected} />}
-          right={<PeopleDetails itemId={selectedPeople} />}
+          left={<PeopleList activeId={peopleSelected} onSelected={this.onSelected} />}
+          right={<PeopleDetails itemId={peopleSelected} />}
         />
 
         <Row
-          left={<StarshipList activeId={selectedStarship} onSelected={this.onSelected} />}
-          right={<StarshipDetails itemId={selectedStarship} />}
+          left={<StarshipsList activeId={starshipsSelected} onSelected={this.onSelected} />}
+          right={<StarshipsDetails itemId={starshipsSelected} />}
         />
 
         <Row
-          left={<PlanetList activeId={selectedPlanet} onSelected={this.onSelected} />}
-          right={<PlanetDetails itemId={selectedPlanet} />}
+          left={<PlanetsList activeId={planetsSelected} onSelected={this.onSelected} />}
+          right={<PlanetsDetails itemId={planetsSelected} />}
         />
       </div>
     );
