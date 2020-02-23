@@ -5,14 +5,10 @@ import SwapiService from '../../services/swapi-service';
 
 const swapi = new SwapiService();
 
-const wrapp = (Wrapped, fn) => {
-    return (props) => {
-        return <Wrapped {...props}>{fn}</Wrapped>
-    }
-};
+const wrapp = (Wrapped, fn) => (props) => <Wrapped {...props}>{fn}</Wrapped>;
 
-export const PeopleList = withData(wrapp(ItemList, item => `${item.name}, ${item.id}`), swapi.getAllPeople, 'People');
+export const PeopleList = withData(wrapp(ItemList, i => `${i.name}, ${i.birthYear}, id: ${i.id}`), swapi.getAllPeople, 'People');
 
-export const PlanetList = withData(wrapp(ItemList, item => `${item.name}, ${item.id}`), swapi.getAllPlanets, 'Planet');
+export const PlanetList = withData(wrapp(ItemList, i => `${i.name}, ${i.diameter}, id: ${i.id}`), swapi.getAllPlanets, 'Planet');
 
-export const StarshipList = withData(wrapp(ItemList, item => `${item.name}, ${item.id}`), swapi.getAllStarships, 'Starship');
+export const StarshipList = withData(wrapp(ItemList, i => `${i.name}, ${i.model}, id: ${i.id}`), swapi.getAllStarships, 'Starship');

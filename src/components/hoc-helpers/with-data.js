@@ -9,15 +9,12 @@ const withData = (View, getData, type = false) => {
             hasError: false,
         };
 
-        updateData(id) {
-            getData(id)
-                .then((data) => {
-                    this.setState({ data })
-                })
-                .catch((err) => {
-                    console.error( err );
-                    this.setState({ hasError: true })
-                });
+        componentDidMount() {
+            const { itemId } = this.props;
+
+            if (itemId !== false) {
+                this.updateData(itemId);
+            }
         }
 
         componentDidUpdate(prevProps) {
@@ -29,16 +26,21 @@ const withData = (View, getData, type = false) => {
             }
         }
 
-        componentDidMount() {
-            const { itemId } = this.props;
-
-            if (itemId !== false) {
-                this.updateData(itemId);
-            }
+        updateData(id) {
+            getData(id)
+                .then((data) => {
+                    this.setState({ data })
+                })
+                .catch((err) => {
+                    console.error( err );
+                    this.setState({ hasError: true })
+                });
         }
 
         render() {
-            if (this.state.hasError) {
+            const { hasError } = this.state;
+
+            if (hasError) {
                 return <div className="card item-details"><ErrorIndicator /></div>
             }
 
