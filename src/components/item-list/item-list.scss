@@ -1,13 +1,13 @@
 .item-list {
-    margin-bottom: 1rem;
+  margin-bottom: 1rem;
 
-    .list-group-item {
-        cursor: pointer;
+  .list-group-item {
+    cursor: pointer;
 
-        &.active,
-        &:focus,
-        &:hover {
-            background-color: #444;
-        }
+    &.active,
+    &:focus,
+    &:hover {
+      background-color: #444;
     }
+  }
 }

@@ -1,27 +1,27 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 
-import './error-button.scss';
+import "./error-button.scss";
 
 export default class ErrorButton extends Component {
+  state = {
+    renderError: false
+  };
 
-    state = {
-        renderError: false
-    };
+  render() {
+    const { renderError } = this.state;
 
-    render() {
-        const { renderError } = this.state;
-
-        if (renderError) {
-            this.foo.bar = 0;
-        }
-
-        return (
-            <button
-                className="error-button btn btn-danger btn-lg"
-                type="button"
-                onClick={() => this.setState({ renderError: true })}>
-                Throw Error
-            </button>
-        );
+    if (renderError) {
+      this.foo.bar = 0;
     }
+
+    return (
+      <button
+        className="error-button btn btn-danger btn-lg"
+        type="button"
+        onClick={() => this.setState({ renderError: true })}
+      >
+        Throw Error
+      </button>
+    );
+  }
 }

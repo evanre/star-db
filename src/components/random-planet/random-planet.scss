@@ -1,25 +1,25 @@
 .random-planet {
-    display: flex;
-    padding: 1rem;
-    border: 1px solid #444;
-    margin-bottom: 1rem;
+  border: 1px solid #444;
+  display: flex;
+  margin-bottom: 1rem;
+  padding: 1rem;
 
-    .planet-image {
-        width: 150px;
-        height: 150px;
-        border-radius: 10px;
-        margin-right: 1rem;
+  .planet-image {
+    border-radius: 10px;
+    height: 150px;
+    margin-right: 1rem;
+    width: 150px;
+  }
+
+  .list-group {
+    margin: 1rem 0 0 1rem;
+  }
+
+  .list-group-item {
+    padding: .25rem;
+
+    .term {
+      margin-right: .5rem;
     }
-
-    .list-group {
-        margin: 1rem 0 0 1rem;
-    }
-
-    .list-group-item {
-        padding: .25rem;
-
-        .term {
-            margin-right: .5rem;
-        }
-    }
+  }
 }
